@@ -108,6 +108,13 @@ int main(int argc, char * argv[]) {
         exit(1);
     }
     
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if (![fileManager fileExistsAtPath:inpath]) {
+        NSLog(@"%@ not exist.", inpath);
+        exit(1);
+    }
+ 
     
     rebasePointerSet = [NSMutableSet set];
     
