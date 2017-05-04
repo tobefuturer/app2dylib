@@ -32,12 +32,14 @@ extern NSMutableSet * rebasePointerSet;
 
 #define PAGEZERO_SIZE_AFTER_MODIFY 0x4000
 
+
+
+
+
 template <typename IntTypeForPointer, class mach_header_t, class segment_command_t, class section_t, class nlist_t, class dylib_command_t>
 void app2dylib(NSString *inpath, NSString * outpath){
     
-    NSString * dylibName = [outpath lastPathComponent];
-    NSString * dylibPath = [@"/usr/lib/" stringByAppendingString:dylibName];
-    
+   
     NSMutableData * outData = [[NSMutableData alloc] initWithContentsOfFile:inpath];
     
     CDFile * ofile = [CDFile fileWithContentsOfFile:inpath searchPathState:nil];
@@ -75,7 +77,22 @@ void app2dylib(NSString *inpath, NSString * outpath){
     
     
     
-     
+    NSString * dylibName = [outpath lastPathComponent];
+    
+    NSString * dylibPath = nil;
+    
+    if(machOFile.minVersionIOS != nil && machOFile.minVersionMacOSX == nil) {
+        dylibPath = [@"@executable_path" stringByAppendingPathComponent:dylibName];
+    }
+    
+    if(machOFile.minVersionIOS == nil && machOFile.minVersionMacOSX != nil) {
+        dylibPath = [@"@executable_path/../Resources" stringByAppendingPathComponent:dylibName];
+    }
+    
+    if(!dylibPath){
+        NSLog(@"Mach-o file must have a Load Command named LC_VERSION_MIN_MACOSX or LC_VERSION_MIN_IPHONEOS!");
+        exit(1);
+    }
      
     CDLCDyldInfo *dyldInfo = machOFile.dyldInfo;
     uint32 dylib_cmd_size = round((int)dylibPath.length + 1,8) + sizeof(dylib_command_t);
@@ -135,8 +152,17 @@ void app2dylib(NSString *inpath, NSString * outpath){
     }
     
     
-    [outData writeToFile:outpath atomically:true];
-    chmod(outpath.UTF8String, 0755);
+    NSError * err = nil;
+    [outData writeToFile:outpath options:NSDataWritingWithoutOverwriting error:&err];
+    
+    if (!err) {
+        chmod(outpath.UTF8String, 0755);
+    }else{
+        NSLog(@"Write file error : %@", err);
+        return;
+    }
+    
+    
 
 }
 

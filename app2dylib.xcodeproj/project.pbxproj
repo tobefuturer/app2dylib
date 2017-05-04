@@ -72,7 +72,7 @@
 		8F54CA2B1DA4292900221131 /* app2dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = app2dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F54CA361DA4298500221131 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		8F54CA381DA429A600221131 /* class-dump.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "class-dump.xcodeproj"; path = "class-dump/class-dump.xcodeproj"; sourceTree = "<group>"; };
-		8F54CA5A1DA441E000221131 /* app2dylib_template.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = app2dylib_template.hpp; sourceTree = "<group>"; };
+		8F54CA5A1DA441E000221131 /* app2dylib_template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = app2dylib_template.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				8F54CA361DA4298500221131 /* main.mm */,
-				8F54CA5A1DA441E000221131 /* app2dylib_template.hpp */,
+				8F54CA5A1DA441E000221131 /* app2dylib_template.h */,
 			);
 			path = src;
 			sourceTree = "<group>";

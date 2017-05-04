@@ -29,7 +29,7 @@
 
 
 
-#import "app2dylib_template.hpp"
+#import "app2dylib_template.h"
 
 
 
